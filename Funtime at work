@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Site Name</title>
+  <meta name="description" content="A clean, responsive starter webpage you can customize." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #ffffff;
+      --text: #0f172a; /* slate-900 */
+      --muted: #475569; /* slate-600 */
+      --brand: #2563eb; /* blue-600 */
+      --brand-600: #2563eb;
+      --brand-700: #1d4ed8;
+      --surface: #f8fafc; /* slate-50 */
+      --ring: #93c5fd; /* blue-300 */
+      --card: #ffffff;
+      --border: #e2e8f0; /* slate-200 */
+    }
+    @media (prefers-color-scheme: dark) {
+      :root{
+        --bg: #0b1220;
+        --text: #e5e7eb;
+        --muted: #cbd5e1;
+        --brand: #60a5fa; /* blue-400 */
+        --brand-600: #60a5fa;
+        --brand-700: #3b82f6;
+        --surface: #0f172a;
+        --ring: #1d4ed8;
+        --card: #111827;
+        --border: #1f2937;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    img{ max-width: 100%; display: block; height: auto; }
+    .container{ width: min(1100px, 92vw); margin-inline: auto; }
+    .btn{
+      display:inline-block; border: 1px solid var(--brand-600); background: var(--brand);
+      color: white; padding: .8rem 1rem; border-radius: .75rem; font-weight: 600; 
+      transition: transform .12s ease, background .2s ease, box-shadow .2s ease;
+      box-shadow: 0 6px 18px rgba(37,99,235,.25);
+    }
+    .btn:focus{ outline: none; box-shadow: 0 0 0 4px var(--ring); }
+    .btn:hover{ background: var(--brand-700); transform: translateY(-1px); }
+
+    /* Header */
+    header{ position: sticky; top: 0; z-index: 40; backdrop-filter: saturate(180%) blur(8px); background: color-mix(in srgb, var(--bg) 84%, transparent); border-bottom: 1px solid var(--border); }
+    .nav{ display:flex; align-items:center; justify-content: space-between; padding: .9rem 0; }
+    .logo{ display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:.3px; }
+    .logo-mark{ width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--brand), #a78bfa); display:grid; place-items:center; color:white; font-weight:800; }
+    nav ul{ display:flex; gap: 1rem; list-style:none; padding:0; margin:0; }
+    nav a{ padding:.5rem .8rem; border-radius:.6rem; color: var(--muted); font-weight:600; }
+    nav a:focus, nav a:hover{ background: var(--surface); color: var(--text); outline:none; }
+
+    /* Hero */
+    .hero{ padding: 4.5rem 0 3rem; }
+    .hero-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap:clamp(1rem, 4vw, 2.2rem); align-items:center; }
+    .eyebrow{ display:inline-block; font-size:.85rem; font-weight:700; color:var(--brand); background: color-mix(in srgb, var(--brand) 12%, transparent); padding:.3rem .6rem; border-radius:2rem; }
+    h1{ font-size: clamp(1.9rem, 3.8vw + .4rem, 3.2rem); line-height:1.1; margin:.6rem 0 1rem; }
+    .lead{ font-size: clamp(1rem, 1.2vw + .6rem, 1.2rem); color: var(--muted); margin-bottom: 1.2rem; }
+    .hero-media{ border:1px solid var(--border); border-radius: 1.2rem; overflow:hidden; background: var(--card); box-shadow: 0 12px 28px rgba(2,6,23, .12); }
+
+    /* Feature cards */
+    section{ padding: 3rem 0; }
+    .section-head{ display:flex; align-items:end; justify-content: space-between; gap:1rem; margin-bottom:1.4rem; }
+    .section-head h2{ font-size: clamp(1.4rem, 2.1vw + .6rem, 2rem); margin:0; }
+    .grid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:1rem; }
+    .card{ background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1rem; box-shadow: 0 6px 16px rgba(2,6,23,.06); }
+    .card h3{ margin:.2rem 0 .4rem; font-size:1.15rem; }
+    .badge{ font-size:.75rem; font-weight:700; color:var(--brand); background: color-mix(in srgb, var(--brand) 12%, transparent); padding:.2rem .55rem; border-radius:.5rem; }
+
+    /* About */
+    .split{ display:grid; grid-template-columns: 1fr 1fr; gap:1rem; }
+
+    /* Gallery */
+    .masonry{ columns: 3 260px; column-gap: 1rem; }
+    .masonry > figure{ break-inside: avoid; margin: 0 0 1rem; border-radius: .8rem; overflow: hidden; border: 1px solid var(--border); background: var(--card); }
+    .masonry figcaption{ padding:.6rem .7rem; font-size:.9rem; color: var(--muted); }
+
+    /* Contact */
+    form{ display:grid; gap:.8rem; }
+    label{ font-weight: 600; font-size:.95rem; }
+    input, textarea{ width:100%; border:1px solid var(--border); background: var(--bg); color:var(--text); padding:.8rem .9rem; border-radius:.7rem; font: inherit; }
+    input:focus, textarea:focus{ outline:none; box-shadow: 0 0 0 3px var(--ring); }
+    textarea{ min-height: 140px; resize: vertical; }
+
+    /* Footer */
+    footer{ border-top:1px solid var(--border); padding: 1.4rem 0; color: var(--muted); }
+
+    /* Utilities */
+    .muted{ color: var(--muted); }
+    .center{ text-align:center; }
+    .spacer{ height: 1rem; }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero-grid, .grid, .split{ grid-template-columns: 1fr; }
+      header .nav{ gap:.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to content</a>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <div class="logo" aria-label="Home">
+        <div class="logo-mark" aria-hidden="true">★</div>
+        <span>YourBrand</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">WELCOME</span>
+          <h1 id="hero-title">Build a modern, responsive site in minutes</h1>
+          <p class="lead">This single-file template gives you a clean layout, accessible components, and a flexible design system. Customize colors, text, and images—no build tools required.</p>
+          <div style="display:flex; gap:.6rem; align-items:center; flex-wrap:wrap;">
+            <a class="btn" href="#contact">Get in touch</a>
+            <a class="muted" href="#features" aria-label="Learn more about features">Learn more →</a>
+          </div>
+        </div>
+        <div class="hero-media" aria-hidden="true">
+          <img src="https://images.unsplash.com/photo-1520684971321-69c368172f30?q=80&w=1600&auto=format&fit=crop" alt="Abstract colorful shapes representing creativity and design" />
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="container" aria-labelledby="features-title">
+      <div class="section-head">
+        <h2 id="features-title">Features that matter</h2>
+        <p class="muted">Fast, accessible, and easy to adapt.</p>
+      </div>
+      <div class="grid">
+        <article class="card" aria-label="Responsive by default">
+          <span class="badge">Responsive</span>
+          <h3>Responsive by default</h3>
+          <p class="muted">Looks great on phones, tablets, and desktops with a fluid grid and sensible typography.</p>
+        </article>
+        <article class="card" aria-label="Accessible">
+          <span class="badge">A11y</span>
+          <h3>Accessible</h3>
+          <p class="muted">Landmarks, focus styles, and semantic HTML help everyone navigate your site.</p>
+        </article>
+        <article class="card" aria-label="No build tools">
+          <span class="badge">Vanilla</span>
+          <h3>No build tools</h3>
+          <p class="muted">Just one HTML file with CSS and a tiny bit of JS—edit and publish anywhere.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="container" aria-labelledby="about-title">
+      <div class="section-head">
+        <h2 id="about-title">About</h2>
+      </div>
+      <div class="split">
+        <div class="card">
+          <h3>Who we are</h3>
+          <p class="muted">Replace this with your mission. Keep it concise and people-focused. Mention what you do, who you serve, and the outcomes you create.</p>
+        </div>
+        <div class="card">
+          <h3>What we do</h3>
+          <ul class="muted">
+            <li>Service or product #1</li>
+            <li>Service or product #2</li>
+            <li>Service or product #3</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="container" aria-labelledby="gallery-title">
+      <div class="section-head">
+        <h2 id="gallery-title">Gallery</h2>
+        <p class="muted">Swap these images with your own.</p>
+      </div>
+      <div class="masonry" aria-live="polite">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1496302662116-35cc4f36df92?q=80&w=1600&auto=format&fit=crop" alt="Sunlit workspace with laptop" />
+          <figcaption>Work that feels good</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=1600&auto=format&fit=crop" alt="City skyline at dusk" />
+          <figcaption>We build for scale</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop" alt="Code on a screen" />
+          <figcaption>Clean and maintainable</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="container" aria-labelledby="contact-title">
+      <div class="section-head">
+        <h2 id="contact-title">Contact</h2>
+        <p class="muted">Send us a message and we’ll get back to you.</p>
+      </div>
+      <form id="contactForm" novalidate aria-describedby="formStatus">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your full name" required aria-required="true" />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required aria-required="true" />
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="How can we help?" required aria-required="true"></textarea>
+        </div>
+        <button class="btn" type="submit">Send message</button>
+        <p id="formStatus" class="muted" role="status" aria-live="polite" style="margin:.4rem 0 0"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:.6rem; flex-wrap:wrap;">
+      <small>© <span id="year"></span> YourBrand. All rights reserved.</small>
+      <a href="#top" class="muted" id="toTop" aria-label="Back to top">↑ Back to top</a>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Simple form validation & success message (demo only)
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = data.get('name')?.toString().trim();
+      const email = data.get('email')?.toString().trim();
+      const message = data.get('message')?.toString().trim();
+
+      if(!name || !email || !message){
+        status.textContent = 'Please fill out all fields.';
+        return;
+      }
+      // You can replace this with your own submit logic / API call
+      status.textContent = 'Thanks! Your message has been received.';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
